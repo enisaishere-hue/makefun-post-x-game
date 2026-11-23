@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORBIT BLASTER 3D — built from one prompt on make.fun</title>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #050510; height: 100%; }
+  #scene { display: block; width: 100vw; height: 100vh; }
+  .hud {
+    position: fixed; color: #eaf6ff; font-family: "JetBrains Mono", "DejaVu Sans Mono", monospace;
+    text-shadow: 0 2px 8px rgba(0,0,0,.8); user-select: none; pointer-events: none; z-index: 2;
+  }
+  #title { top: 18px; left: 22px; font-size: 26px; font-weight: 700; letter-spacing: 2px; }
+  #title small { display: block; font-size: 13px; letter-spacing: 1px; color: #8affff; margin-top: 4px; }
+  #score { top: 20px; right: 24px; font-size: 24px; font-weight: 700; text-align: right; }
+  #lives { top: 52px; right: 24px; font-size: 20px; color: #ff5d7a; letter-spacing: 3px; }
+  #note {
+    top: 42%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 30px; font-weight: 700; color: #ffe066; opacity: 0;
+    transition: opacity .25s ease; white-space: nowrap;
+  }
+  #help { bottom: 16px; left: 22px; font-size: 14px; color: #9db8d6; }
+  #shake {
+    bottom: 16px; right: 24px; font-size: 14px; color: #9db8d6;
+    pointer-events: auto; cursor: pointer; border: 1px solid #3a5a7a;
+    padding: 6px 10px; border-radius: 6px; background: rgba(5,5,16,.55);
+  }
+  #shake:hover { border-color: #8affff; color: #eaf6ff; }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div class="hud" id="title">ORBIT BLASTER 3D<small>built from one prompt · make.fun</small></div>
+<div class="hud" id="score">SCORE 00000</div>
+<div class="hud" id="lives">♥♥♥</div>
+<div class="hud" id="note"></div>
+<div class="hud" id="help">← → / A D move &nbsp;·&nbsp; SPACE fire &nbsp;·&nbsp; R reduce shake</div>
+<div class="hud" id="shake">SHAKE: FULL (R)</div>
+<script type="importmap">
+{ "imports": { "three": "./three.module.min.js" } }
+</script>
+<script type="module" src="./game.js"></script>
+<script>
+  // The reduce-shake pill is clickable as well as the R key.
+  document.getElementById('shake').addEventListener('click', () => {
+    const g = window.__game;
+    if (!g) return;
+    g.setShake(g.juice.strength < 1 ? 1 : 0.25);
+  });
+</script>
+</body>
+</html>
